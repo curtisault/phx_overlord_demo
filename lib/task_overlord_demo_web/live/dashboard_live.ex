@@ -181,7 +181,9 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
                   <div class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <div class="w-2 h-2 bg-white rounded-full animate-pulse"></div>
                   </div>
-                  <span>⚡ Quick Task (2s)</span>
+                  <span class="flex items-center gap-2">
+                    <.icon name="bolt" class="h-4 w-4" /> Quick Task (2s)
+                  </span>
                 </div>
               </button>
 
@@ -195,7 +197,9 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
                   <div class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <div class="w-2 h-2 bg-white rounded-full"></div>
                   </div>
-                  <span>🕐 Long Task (10s)</span>
+                  <span class="flex items-center gap-2">
+                    <.icon name="clock" class="h-4 w-4" /> Long Task (10s)
+                  </span>
                 </div>
               </button>
 
@@ -209,7 +213,9 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
                   <div class="w-5 h-5 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
                     <div class="w-2 h-2 bg-white rounded-full"></div>
                   </div>
-                  <span>💥 Error Task (will fail)</span>
+                  <span class="flex items-center gap-2">
+                    <.icon name="x-circle" class="h-4 w-4" /> Error Task (will fail)
+                  </span>
                 </div>
               </button>
             </div>
@@ -254,7 +260,9 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
                       </div>
                     </div>
                   </div>
-                  <span>🔢 Number Stream (1-5)</span>
+                  <span class="flex items-center gap-2">
+                    <.icon name="hashtag" class="h-4 w-4" /> Number Stream (1-5)
+                  </span>
                 </div>
               </button>
 
@@ -284,7 +292,9 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
                       </div>
                     </div>
                   </div>
-                  <span>📝 String Stream (words)</span>
+                  <span class="flex items-center gap-2">
+                    <.icon name="document-text" class="h-4 w-4" /> String Stream (words)
+                  </span>
                 </div>
               </button>
             </div>
@@ -397,7 +407,7 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
           <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           </div>
           <div class="relative flex items-center justify-center gap-1">
-            <span>🗑️</span>
+            <.icon name="trash" class="h-4 w-4" />
             <span>Discard</span>
           </div>
         </button>
