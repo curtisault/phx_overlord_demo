@@ -52,6 +52,8 @@ defmodule TaskOverlordDemo.MixProject do
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.0"},
+      {:recon, "~> 2.5"},
+      {:observer_cli, "~> 1.8"},
       {:swoosh, "~> 1.5"},
       {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
       {:telemetry_metrics, "~> 1.0"},

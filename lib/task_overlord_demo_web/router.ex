@@ -17,8 +17,10 @@ defmodule TaskOverlordDemoWeb.Router do
   scope "/", TaskOverlordDemoWeb do
     pipe_through :browser
 
-    get "/", PageController, :tasks
+    live "/", DemoLive, :index
+    get "/tasks", PageController, :tasks
     get "/landing", PageController, :landing
+    live "/dashboard", DashboardLive, :index
   end
 
   # Other scopes may use custom stacks.
