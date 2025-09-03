@@ -387,7 +387,7 @@ defmodule TaskOverlordDemo.Overlord.Stream do
     updated_task =
       tasks
       |> Map.get(task_ref)
-      |> Map.put(:status, :done)
+      |> Map.update!(:stream, &Map.put(&1, :status, :done))
       |> Map.put(:finished_at, DateTime.utc_now())
 
     new_tasks = Map.put(tasks, task_ref, updated_task)
@@ -395,9 +395,19 @@ defmodule TaskOverlordDemo.Overlord.Stream do
     {:noreply, broadcast(new_state)}
   end
 
-  def handle_cast({:stream_item, _task_ref, {:error, reason}}, state) do
+  def handle_cast({:stream_item, task_ref, {:error, reason}}, %{tasks: tasks} = state) do
     Logger.error("#{__MODULE__} - Stream error: #{inspect(reason)}")
-    {:noreply, state}
+
+    updated_task =
+      tasks
+      |> Map.get(task_ref)
+      |> Map.update!(:stream, &Map.put(&1, :status, :error))
+      |> Map.put(:finished_at, DateTime.utc_now())
+      |> Map.update!(:results, &(&1 ++ [{:error, reason}]))
+
+    new_tasks = Map.put(tasks, task_ref, updated_task)
+    new_state = %{state | tasks: new_tasks}
+    {:noreply, broadcast(new_state)}
   end
 
   def handle_cast({:stream_item, task_ref, result}, %{tasks: tasks} = state) do
@@ -405,7 +415,7 @@ defmodule TaskOverlordDemo.Overlord.Stream do
 
     updated_task =
       task
-      |> Map.update!(:stream_results, &(&1 ++ [result]))
+      |> Map.update!(:results, &(&1 ++ [result]))
       |> Map.update!(:stream_completed, &(&1 + 1))
 
     new_tasks = Map.put(tasks, task_ref, updated_task)

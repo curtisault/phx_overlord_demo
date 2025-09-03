@@ -9,7 +9,8 @@ defmodule TaskOverlordDemo.Application do
   def start(_type, _args) do
     children = [
       TaskOverlordDemoWeb.Telemetry,
-      {DNSCluster, query: Application.get_env(:task_overlord_demo, :dns_cluster_query) || :ignore},
+      {DNSCluster,
+       query: Application.get_env(:task_overlord_demo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: TaskOverlordDemo.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: TaskOverlordDemo.Finch},

@@ -26,7 +26,7 @@ defmodule TaskOverlordDemo.Overlord do
           heading: Module.t() | String.t(),
           message: String.t(),
           status: status(),
-          logs: list(String.t()),
+          logs: [{Logger.level(), String.t()}],
           started_at: DateTime.t(),
           finished_at: DateTime.t() | nil,
           expires_at_unix: integer()

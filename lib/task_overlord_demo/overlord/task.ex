@@ -13,18 +13,12 @@ defmodule TaskOverlordDemo.Overlord.Task do
 
   defstruct [
     :task,
-    :result,
-    :logs,
-    :started_at,
-    :finished_at
+    :result
   ]
 
   @type t() :: %__MODULE__{
           task: TaskOverlordDemo.Overlord.t(),
-          result: any() | nil,
-          logs: [{Logger.level(), String.t()}],
-          started_at: DateTime.t(),
-          finished_at: DateTime.t() | nil
+          result: any() | nil
         }
 
   def make_task(%Task{} = beam_task, %{heading: _heading, message: _message} = attrs, opts \\ []) do
@@ -41,10 +35,7 @@ defmodule TaskOverlordDemo.Overlord.Task do
 
     %__MODULE__{
       task: task,
-      result: nil,
-      logs: [],
-      started_at: DateTime.utc_now(),
-      finished_at: nil
+      result: nil
     }
   end
 
@@ -71,11 +62,11 @@ defmodule TaskOverlordDemo.Overlord.Task do
   def async(tuple, attrs \\ %{})
 
   def async(func, attrs) when is_function(func, 0) do
-    GenServer.call(__MODULE__, {:async_task, func, attrs})
+    GenServer.cast(__MODULE__, {:async_task, func, attrs})
   end
 
   def async({module, func, args, opts}, attrs) when is_function(func) and is_list(args) do
-    GenServer.call(__MODULE__, {:async_task, {module, func, args, opts}, attrs})
+    GenServer.cast(__MODULE__, {:async_task, {module, func, args, opts}, attrs})
   end
 
   def async(_func, _attrs) do
