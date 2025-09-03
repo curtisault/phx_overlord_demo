@@ -273,7 +273,12 @@ defmodule TaskOverlordDemo.Overlord.Task do
 
     updated_tasks =
       Map.update!(state.tasks, ref, fn task ->
-        %{task | status: :done, finished_at: DateTime.utc_now(), result: result}
+        current_task = Map.get(task, :task)
+
+        Map.merge(task, %{
+          task: %{current_task | status: :completed, finished_at: DateTime.utc_now()},
+          result: result
+        })
       end)
 
     updated_state = %{state | tasks: updated_tasks}

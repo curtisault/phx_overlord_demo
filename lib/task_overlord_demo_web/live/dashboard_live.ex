@@ -96,7 +96,7 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
     all_items = socket.assigns.all_items
 
     running = Enum.filter(all_items, &item_status_matches?(&1, [:running, :streaming]))
-    completed = Enum.filter(all_items, &item_status_matches?(&1, [:done]))
+    completed = Enum.filter(all_items, &item_status_matches?(&1, [:done, :completed]))
     error = Enum.filter(all_items, &item_status_matches?(&1, [:error, :failed]))
 
     socket
@@ -145,6 +145,7 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
   defp status_color(:running), do: "text-blue-600"
   defp status_color(:streaming), do: "text-blue-600"
   defp status_color(:done), do: "text-green-600"
+  defp status_color(:completed), do: "text-green-600"
   defp status_color(:error), do: "text-red-600"
   defp status_color(:failed), do: "text-red-600"
   defp status_color(_), do: "text-gray-600"
@@ -387,13 +388,18 @@ defmodule TaskOverlordDemoWeb.DashboardLive do
         <% end %>
       </div>
 
-      <%= if get_status(@item) in [:done, :error, :failed] do %>
+      <%= if get_status(@item) in [:done, :completed, :error, :failed] do %>
         <button
           phx-click="discard_task"
           phx-value-ref={encode_ref(get_ref(@item))}
-          class="mt-3 text-xs bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition-colors"
+          class="group relative mt-3 bg-gradient-to-r from-red-500 to-rose-600 text-white text-xs font-semibold px-3 py-2 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 overflow-hidden"
         >
-          Discard
+          <div class="absolute inset-0 bg-gradient-to-r from-red-400 to-rose-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          </div>
+          <div class="relative flex items-center justify-center gap-1">
+            <span>🗑️</span>
+            <span>Discard</span>
+          </div>
         </button>
       <% end %>
     </div>
